@@ -112,7 +112,7 @@ pub fn main_rs() -> std::os::raw::c_int {
 
     // instantiate backend
     #[cfg(not(feature = "gl"))]
-    let (_window, instance, mut adapters, surface) = {
+    let (window, instance, mut adapters, surface) = {
         let window = wb.build(&event_loop).unwrap();
         let instance =
             back::Instance::create("gfx-rs quad", 1).expect("Failed to create an instance!");
@@ -126,7 +126,7 @@ pub fn main_rs() -> std::os::raw::c_int {
         (window, Some(instance), adapters, surface)
     };
     #[cfg(feature = "gl")]
-    let (_window, instance, mut adapters, surface) = {
+    let (window, instance, mut adapters, surface) = {
         #[cfg(not(target_arch = "wasm32"))]
         let (window, surface) = {
             let builder =
@@ -205,6 +205,12 @@ pub fn main_rs() -> std::os::raw::c_int {
             },
             winit::event::Event::RedrawEventsCleared => {
                 renderer.render();
+            }
+            winit::event::Event::MainEventsCleared => {
+                *control_flow = winit::event_loop::ControlFlow::WaitUntil(
+                    std::time::Instant::now() + std::time::Duration::from_millis(1000 / 60),
+                );
+                window.request_redraw();
             }
             _ => {}
         }

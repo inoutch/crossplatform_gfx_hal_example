@@ -6,7 +6,7 @@ edition = "2018"
 
 [lib]
 name = "game_bindings"
-crate-type = ["staticlib", "cdylib"]
+crate-type = ["staticlib"]
 
 [features]
 metal = ["game_lib/metal"]
