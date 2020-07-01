@@ -17,7 +17,7 @@ unstable = []
 env_logger = "0.6"
 image = "0.21"
 log = "0.4"
-winit = "0.21"
+winit = "0.22.2"
 hal = { version = "0.5", package = "gfx-hal" }
 
 [dependencies.gfx-backend-gl]
